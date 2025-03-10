@@ -83,7 +83,7 @@ export default function Home() {
             setLoading(true);
             const reader = new FileReader();
             reader.onload = (e) => {
-                // @ts-expect-error
+                // @ts-expect-error Image constructor is used dynamically and TypeScript does not infer its type correctly
                 const img = new Image();
                 img.src = e.target?.result as string;
                 img.onload = () => {
