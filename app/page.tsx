@@ -16,7 +16,8 @@ import {
     ReactCompareSliderHandle,
     ReactCompareSliderImage,
 } from "react-compare-slider";
-import Image from "next/image";
+import packageJson from "../package.json";
+
 
 /**
  * CustomHandle Component
@@ -183,7 +184,7 @@ export default function Home() {
                                     </label>
                                     <input
                                         type="text"
-                                        placeholder="Enter text (e.g., Valid for AEAT)"
+                                        placeholder="Enter text (e.g., Valid for EasyByte Hub)"
                                         maxLength={100}
                                         value={watermarkText}
                                         onChange={(e) => setWatermarkText(e.target.value)}
@@ -333,6 +334,9 @@ export default function Home() {
                         >
                             GitHub
                         </a>
+                    </p>
+                    <p className="text-gray-400 text-xs mt-1">
+                        Version: {packageJson.version}
                     </p>
                 </div>
             </footer>
