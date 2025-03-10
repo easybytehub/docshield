@@ -5,7 +5,9 @@ const nextConfig: NextConfig = {
     reactStrictMode: true,
     eslint: {
         ignoreDuringBuilds: true
-    }
+    },
+    basePath: "/docshield",
+    assetPrefix: "/docshield/",
 };
 
 export default nextConfig;
