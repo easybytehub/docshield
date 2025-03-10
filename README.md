@@ -60,7 +60,7 @@ We welcome contributions! Follow these steps:
 DocShield is distributed under the **MIT License**, granting users the freedom to modify and use it as needed.
 
 ## Acknowledgments
-Developed and maintained by **EasyByte Hub**. Learn more at [EasyByte Hub](https://easybyte.es).
+Developed and maintained by **[Javier Miralles](https://www.linkedin.com/in/javier-miralles-rancano/)**. An Open Source project by **EasyByte Hub**. Learn more at [EasyByte Hub](https://easybyte.es).
 
 ---
 
