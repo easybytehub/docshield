@@ -83,7 +83,7 @@ export default function Home() {
             setLoading(true);
             const reader = new FileReader();
             reader.onload = (e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 const img = new Image();
                 img.src = e.target?.result as string;
                 img.onload = () => {
