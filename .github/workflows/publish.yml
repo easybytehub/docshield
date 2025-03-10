@@ -39,6 +39,9 @@ jobs:
       - name: Debug List contents of out folder 📂
         run: ls -la out
 
+      - name: Debug List contents of out folder 📂
+        run: ls -la .
+
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
         with:
