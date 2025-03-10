@@ -185,8 +185,8 @@ export const createScribblePattern = (ctx: CanvasRenderingContext2D, width: numb
 
     // Calculate a scaling factor based on the canvas size.
     const baseScale = Math.sqrt((width * height) / (800 * 800));
-    const lineSpacing = Math.max(5, height / 80);
-    const numLines = Math.floor(height / lineSpacing);
+    const lineSpacing = Math.max(5, height / 150);
+    const numLines = Math.floor(height / lineSpacing) * 1.2;
 
     // Draw multiple scribble lines with random amplitude, frequency, and phase.
     for (let i = 0; i < numLines; i++) {
@@ -320,10 +320,10 @@ function applyWatermark(
     );
 
     // Set random wave parameters for a unique watermark effect.
-    const amplitude = Math.max(5, finalHeight / 40);
-    const frequency = Math.max(0.005, 10 / finalWidth);
+    const amplitude = Math.max(5, finalHeight / (15 + Math.random() * 5));
+    const frequency = Math.max(0.004, (8 + Math.random() * 4) / finalWidth);
     const phase = Math.random() * 2 * Math.PI;
-    const baseShift = -finalHeight * 0.05;
+    const baseShift = -finalHeight * 0.1;
 
     // Warp the text columns and draw the result onto the main canvas.
     warpTextColumns(ctx, patternCanvas, patternWidth, patternHeight, amplitude, frequency, phase, baseShift);
