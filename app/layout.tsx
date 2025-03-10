@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 // Metadata for SEO and social sharing
 export const metadata: Metadata = {
-    title: "DocShield",
+    title: "DocShield | EasyByte Hub",
     description: "Protect documents with intelligent and secure watermarks.",
     openGraph: {
         title: "DocShield - Smart Document Protection",

@@ -1,8 +1,40 @@
+const MAX_WIDTH = 2500;  // Ancho máximo permitido
+const MAX_HEIGHT = 2500; // Alto máximo permitido
+
+/**
+ * Resize Image to a Safe Limit
+ * Reduces the resolution of an image while maintaining aspect ratio.
+ *
+ * @param img - The original image element.
+ * @returns A resized canvas with the scaled-down image.
+ */
+const resizeImage = (img: HTMLImageElement): HTMLCanvasElement => {
+    const tempCanvas = document.createElement("canvas");
+    const ctx = tempCanvas.getContext("2d");
+    if (!ctx) return tempCanvas;
+
+    let width = img.width;
+    let height = img.height;
+
+    // ⬇️ Aplicar resize si alguna dimensión supera el máximo permitido
+    if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+        const scaleFactor = Math.min(MAX_WIDTH / width, MAX_HEIGHT / height);
+        width = Math.round(width * scaleFactor);
+        height = Math.round(height * scaleFactor);
+    }
+
+    tempCanvas.width = width;
+    tempCanvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+
+    return tempCanvas;
+};
+
 /**
  * Main Function: processImage
- * - Draws the provided image on a canvas with a white background.
- * - Renders fixed text below the image.
- * - Applies a wavy watermark (using repeated text).
+ * - Reduces image resolution if necessary.
+ * - Draws the image on a canvas with a white background.
+ * - Renders fixed text and a wavy watermark.
  * - Applies a grayscale mask via a scribble pattern.
  * - Embeds a verification QR code (assumed to be drawn elsewhere).
  * - Returns a preview of the final image as a data URL.
@@ -18,8 +50,11 @@ export const processImage = async (
     if (!ctx) return;
 
     // Set up dimensions for the image and canvas.
-    const imgWidth = img.width;
-    const imgHeight = img.height;
+    const resizedCanvas = resizeImage(img);
+    const imgWidth = resizedCanvas.width;
+    const imgHeight = resizedCanvas.height;
+
+    // Ajustar tamaño del canvas
     const canvasWidth = imgWidth * 1.1;
     const canvasHeight = imgHeight * 1.25;
     canvas.width = canvasWidth;
@@ -31,7 +66,7 @@ export const processImage = async (
     const imgX = (canvasWidth - imgWidth) / 2;
     // Use 15% of the extra height as top padding.
     const imgY = (canvasHeight - imgHeight) * 0.15;
-    ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
+    ctx.drawImage(resizedCanvas, imgX, imgY, imgWidth, imgHeight);
 
     // Configure font settings for the fixed text below the image.
     const fontSize = Math.max(14, Math.min(imgWidth, imgHeight) / 50);
@@ -149,22 +184,24 @@ export const createScribblePattern = (ctx: CanvasRenderingContext2D, width: numb
     ctx.lineCap = "round";
 
     // Calculate a scaling factor based on the canvas size.
-    const scaleFactor = 15 * Math.sqrt((width * height) / (800 * 800));
-    const lineSpacing = Math.max(1, scaleFactor);
+    const baseScale = Math.sqrt((width * height) / (800 * 800));
+    const lineSpacing = Math.max(5, height / 80);
     const numLines = Math.floor(height / lineSpacing);
 
     // Draw multiple scribble lines with random amplitude, frequency, and phase.
     for (let i = 0; i < numLines; i++) {
         const baseY = i * lineSpacing + lineSpacing / 2;
-        const amplitude = scaleFactor * 10 * (0.5 + Math.random() * 0.5);
-        const frequency = 0.005 + Math.random() * 0.015;
+        const amplitude = Math.max(10, height / 60) * (0.5 + Math.random() * 0.5);
+        const frequency = Math.max(0.002, 15 / width);
         const phase = Math.random() * 2 * Math.PI;
         ctx.beginPath();
-        ctx.lineWidth = 1 + Math.random() * (scaleFactor * 0.5);
+        ctx.lineWidth = Math.max(1, width / 800) + Math.random() * (baseScale * 0.5);
+
         let x = 0;
         let y = baseY + amplitude * Math.sin(phase + frequency * x);
         ctx.moveTo(x, y);
-        for (x = 1; x <= width; x += 5) {
+
+        for (x = 1; x <= width; x += Math.max(2, width / 500)) {
             y = baseY + amplitude * Math.sin(phase + frequency * x);
             ctx.lineTo(x, y);
         }
@@ -258,11 +295,11 @@ function applyWatermark(
     finalHeight: number,
     text: string
 ) {
-    const fontSize = Math.max(10, Math.min(finalWidth, finalHeight) / 50);
-    // Extra padding ensures the pattern covers areas beyond the final canvas.
-    const extra = Math.round(fontSize * 10);
-    const patternWidth = finalWidth + extra * 2;
-    const patternHeight = finalHeight + extra * 100;
+    const fontSize = Math.max(8, Math.min(finalWidth, finalHeight) / 70); // Asegurar legibilidad
+    const extraPadding = Math.round(fontSize * 10);
+    const patternWidth = finalWidth + extraPadding * 2;
+    const patternHeight = finalHeight + extraPadding * 5;
+
     const patternCanvas = document.createElement("canvas");
     patternCanvas.width = patternWidth;
     patternCanvas.height = patternHeight;
@@ -283,10 +320,11 @@ function applyWatermark(
     );
 
     // Set random wave parameters for a unique watermark effect.
-    const amplitude = fontSize * (1 + Math.random() * 4);
-    const frequency = 0.01 + Math.random() * 0.03;
+    const amplitude = Math.max(5, finalHeight / 40);
+    const frequency = Math.max(0.005, 10 / finalWidth);
     const phase = Math.random() * 2 * Math.PI;
-    const baseShift = -0.1 * finalHeight;
+    const baseShift = -finalHeight * 0.05;
+
     // Warp the text columns and draw the result onto the main canvas.
     warpTextColumns(ctx, patternCanvas, patternWidth, patternHeight, amplitude, frequency, phase, baseShift);
 }
