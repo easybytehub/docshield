@@ -63,7 +63,7 @@ export default function Home() {
     const [preview, setPreview] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [watermarkText, setWatermarkText] = useState("");
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/docshield";
 
     // Refs for the canvas and drag & drop zone
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
