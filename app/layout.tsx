@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Script from "next/script";
 
 // Load Google Fonts with custom CSS variables for easy usage in CSS.
 const geistSans = Geist({

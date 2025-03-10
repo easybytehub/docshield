@@ -16,6 +16,7 @@ import {
     ReactCompareSliderHandle,
     ReactCompareSliderImage,
 } from "react-compare-slider";
+import Image from "next/image";
 
 /**
  * CustomHandle Component
@@ -82,6 +83,7 @@ export default function Home() {
             setLoading(true);
             const reader = new FileReader();
             reader.onload = (e) => {
+                // @ts-ignore
                 const img = new Image();
                 img.src = e.target?.result as string;
                 img.onload = () => {
@@ -271,7 +273,7 @@ export default function Home() {
                         </p>
 
                         <div className="p-4 sm:p-6 flex flex-col items-center">
-                            <img
+                            <Image
                                 src={preview}
                                 alt="Protected Document"
                                 className="w-auto h-auto max-w-full rounded-md border border-gray-300"
