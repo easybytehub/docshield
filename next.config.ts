@@ -11,7 +11,8 @@ const nextConfig: NextConfig = {
     trailingSlash: true,
     images: {
         unoptimized: true
-    }
+    },
+    distDir: "out",  // Fuerza a Next.js a usar "out"
 };
 
 export default nextConfig;
