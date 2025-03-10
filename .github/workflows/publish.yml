@@ -33,11 +33,14 @@ jobs:
       - name: Build with Next.js 🏗️
         run: npx next build && npx next export
 
+      - name: Debug List contents of out folder 📂
+        run: ls -la out
+
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-
+          name: github-pages
   deploy:
     environment:
       name: github-pages
@@ -47,6 +50,13 @@ jobs:
     needs: build
 
     steps:
+      - name: Download artifact 📥
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: ./out
+      - name: Extract archive (if applicable)
+        run: tar -xzf out.tar.gz -C ./out || echo "No archive found, using raw files"
       - name: Publish to GitHub Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4
