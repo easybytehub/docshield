@@ -286,7 +286,7 @@ function applyWatermark(
     const amplitude = fontSize * (1 + Math.random() * 4);
     const frequency = 0.01 + Math.random() * 0.03;
     const phase = Math.random() * 2 * Math.PI;
-    const baseShift = -50;
+    const baseShift = -0.1 * finalHeight;
     // Warp the text columns and draw the result onto the main canvas.
     warpTextColumns(ctx, patternCanvas, patternWidth, patternHeight, amplitude, frequency, phase, baseShift);
 }
