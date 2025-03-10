@@ -63,6 +63,7 @@ export default function Home() {
     const [preview, setPreview] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [watermarkText, setWatermarkText] = useState("");
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
     // Refs for the canvas and drag & drop zone
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -83,8 +84,7 @@ export default function Home() {
             setLoading(true);
             const reader = new FileReader();
             reader.onload = (e) => {
-                // @ts-expect-error Image constructor is used dynamically and TypeScript does not infer its type correctly
-                const img = new Image();
+                const img = new window.Image();
                 img.src = e.target?.result as string;
                 img.onload = () => {
                     if (canvasRef.current) {
@@ -244,13 +244,13 @@ export default function Home() {
                                     <ReactCompareSlider
                                         itemOne={
                                             <ReactCompareSliderImage
-                                                src="/protected.png"
+                                                src={`${basePath}/protected.png`}
                                                 alt="Original Document"
                                             />
                                         }
                                         itemTwo={
                                             <ReactCompareSliderImage
-                                                src="/unprotected.png"
+                                                src={`${basePath}/unprotected.png`}
                                                 alt="Watermarked Document"
                                             />
                                         }
@@ -273,7 +273,7 @@ export default function Home() {
                         </p>
 
                         <div className="p-4 sm:p-6 flex flex-col items-center">
-                            <Image
+                            <img
                                 src={preview}
                                 alt="Protected Document"
                                 className="w-auto h-auto max-w-full rounded-md border border-gray-300"
