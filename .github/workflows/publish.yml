@@ -31,7 +31,7 @@ jobs:
           static_site_generator: next
 
       - name: Build with Next.js 🏗️
-        run: npx next build && npx next export
+        run: npx next build
 
       - name: Debug List contents of out folder 📂
         run: ls -la out
