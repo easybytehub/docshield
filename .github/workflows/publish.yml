@@ -31,7 +31,10 @@ jobs:
           static_site_generator: next
 
       - name: Build with Next.js 🏗️
-        run: npx next build
+        run: npm run build
+
+      - name: Debug List contents of .next folder 📂
+        run: ls -la .next
 
       - name: Debug List contents of out folder 📂
         run: ls -la out
