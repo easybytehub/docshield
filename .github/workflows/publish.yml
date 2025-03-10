@@ -53,13 +53,6 @@ jobs:
     needs: build
 
     steps:
-      - name: Download artifact 📥
-        uses: actions/download-artifact@v3
-        with:
-          name: github-pages
-          path: ./out
-      - name: Extract archive (if applicable)
-        run: tar -xzf out.tar.gz -C ./out || echo "No archive found, using raw files"
       - name: Publish to GitHub Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4

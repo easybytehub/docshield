@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
     },
     basePath: "/docshield",
     assetPrefix: "/docshield/",
+    trailingSlash: true,
+    images: {
+        unoptimized: true
+    }
 };
 
 export default nextConfig;
