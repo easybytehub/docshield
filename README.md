@@ -57,7 +57,7 @@ We welcome contributions! Follow these steps:
 5. Submit a pull request for review.
 
 ## License
-DocShield is distributed under the **MIT License**, granting users the freedom to modify and use it as needed.
+DocShield is distributed under the **GPL-3.0 license**.
 
 ## Acknowledgments
 Developed and maintained by **[Javier Miralles](https://www.linkedin.com/in/javier-miralles-rancano/)**. An Open Source project by **EasyByte Hub**. Learn more at [EasyByte Hub](https://easybyte.es).
